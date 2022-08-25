@@ -6,6 +6,7 @@ Para acessar os tutoriais completos, acesse: https://medium.com/@danielly.xavier
 ## Ferramentas usadas
 
 - R 
+- RStudio
 - Python
 - VS Code
 
