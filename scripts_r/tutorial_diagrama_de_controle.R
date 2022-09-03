@@ -17,9 +17,6 @@ for (i in 1:length(files)) {
 #IDENTIFICANDO VARIÁVEIS NO DATASET FINAL
 glimpse(d_fn)
 
-#ANALISANDO O TIPO DA VARIÁVEL
-class(d_fn$DT_SIN_PRI) 
-
 #ANALISANDO A AMPLITUDE DOS DADOS
 summary(d_fn$DT_SIN_PRI) 
 hist(d_fn$DT_SIN_PRI, breaks = 108, freq = T, col = "red",
@@ -57,12 +54,12 @@ diag3$pop[diag3$ano == 2016] = 2997216
 diag3$pop[diag3$ano == 2017] = 3039444
 diag3$pop[diag3$ano == 2018] = 2974703
 
-diag3$taxa_inc = round(diag3$caso/diag3$pop*100000 ,2)
+diag3$taxa_inc = round(diag3$caso/diag3$pop*100000, 2)
 
 diag3$caso = NULL
 diag3$pop = NULL
 
-#CRIANDO TABELA COM OS DDOS DE MÊS E ANO
+#CRIANDO TABELA COM OS DADOS DE MÊS E ANO
 diag3 = dcast(mes ~ ano, data = diag3)
 diag3$`2012` = NULL
 diag3$media = round(rowMeans(diag3[,2:7]), 2)
@@ -128,3 +125,17 @@ ggplot(diag3, aes(x = mes, y= media))+
   scale_x_discrete(limits=1:12)+
   geom_line(data = diag4, aes(x = mes, y= inc), colour = "red", size = 1.3)+
   geom_point(data = diag4, aes(x = mes, y= inc), colour = "red", size = 1.3)
+
+#CRIANDO UM DATA.FRAME COM APENAS UMA PARTE DO ANO
+diag5 = subset(diag4, diag3$mes <= 3)
+
+ggplot(diag3, aes(x = mes, y= media))+
+  geom_line(aes(x = mes, y= media), colour = "black", size = 1.3)+
+  geom_ribbon(data = diag3, aes(ymin=low, ymax=high), alpha=0.3 , fill = "grey70")+
+  ggtitle("Diagrama de controle de dengue, DF, 2019")+
+  theme_bw()+
+  ylab("Taxa de incidência")+
+  xlab("mês")+
+  scale_x_discrete(limits=1:12)+
+  geom_line(data = diag5, aes(x = mes, y= inc), colour = "red", size = 1.3)+
+  geom_point(data = diag5, aes(x = mes, y= inc), colour = "red", size = 1.3)
