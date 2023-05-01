@@ -7,7 +7,6 @@ import seaborn as sns
 
 from ftplib import FTP
 from pysus.online_data.SIH import download
-from scipy.stats import skew, kurtosis
 
 # %%
 #DEFININDO VARIÁVEIS QUE SERÃO USADAS NO DOWLOAD DOS DADOS
